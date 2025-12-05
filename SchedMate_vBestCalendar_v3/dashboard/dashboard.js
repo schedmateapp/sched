@@ -316,12 +316,43 @@ async function loadUserPlan() {
   }
 }
 
-/* ================================
-   HELPERS
-================================ */
-function byId(id) {
-  return document.getElementById(id);
-}
+  /* ================================
+     HELPERS
+  ================================ */
+  function byId(id) {
+    return document.getElementById(id);
+  }
+
+  /* ================================
+     THEME TOGGLE (LIGHT/DARK)
+  ================================ */
+  const THEME_KEY = "sched-theme";
+
+  function applyTheme(theme) {
+    const next = theme === "light" ? "light" : "dark";
+    document.body.dataset.theme = next;
+    document.documentElement.dataset.theme = next;
+
+    const toggle = byId("theme-toggle");
+    if (toggle) {
+      toggle.checked = next === "light";
+    }
+
+    localStorage.setItem(THEME_KEY, next);
+  }
+
+  function initThemeToggle() {
+    const saved = localStorage.getItem(THEME_KEY);
+    const initial = saved || document.body.dataset.theme || "dark";
+    applyTheme(initial);
+
+    const toggle = byId("theme-toggle");
+    if (!toggle) return;
+
+    toggle.addEventListener("change", () => {
+      applyTheme(toggle.checked ? "light" : "dark");
+    });
+  }
 
 function showToast(message, type = "success") {
   const container = document.getElementById("toast-container");
@@ -2671,12 +2702,14 @@ function isOwner() {
 /* ============================================================
    DASHBOARD INIT
 ============================================================ */
-async function initDashboard() {
-  await ensureUser();
-  if (!currentUser) return;
+  async function initDashboard() {
+    await ensureUser();
+    if (!currentUser) return;
 
-  // 1. Load plan FIRST
-  await loadUserPlan();
+    initThemeToggle();
+
+    // 1. Load plan FIRST
+    await loadUserPlan();
 
   document.querySelectorAll(".nav-item").forEach(btn => {
     const view = btn.dataset.view;
