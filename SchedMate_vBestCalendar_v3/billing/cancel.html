@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment Canceled – SchedMate</title>
+  <link rel="stylesheet" href="./css/app.css" />
+  <style>
+    body {
+      background: linear-gradient(145deg, #0d1117, #0a0e13);
+      color: #fff;
+      font-family: Inter, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .cancel-box {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 40px;
+      border-radius: 16px;
+      max-width: 480px;
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 0 40px rgba(0,0,0,0.4);
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+      font-weight: 700;
+      color: #ff6b6b;
+    }
+
+    .sub {
+      color: #b7b7b7;
+      font-size: 16px;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .reason-box {
+      background: rgba(255,255,255,0.08);
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin-bottom: 26px;
+      font-size: 14px;
+      word-break: break-word;
+      color: #ff9f9f;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: none;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      background: #1f6bff;
+      color: #fff;
+      font-size: 16px;
+      margin-bottom: 12px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #1054d6;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.18);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cancel-box">
+    <h1>Payment Canceled</h1>
+
+    <p class="sub">Your subscription was not completed.<br>
+    You can retry anytime to activate SchedMate Pro.</p>
+
+    <div id="reasonBox" class="reason-box"></div>
+
+<a href="billing.html" class="btn">Retry payment</a>
+<a href="dashboard.html" class="btn btn-secondary">Back to dashboard</a>
+<a href="index.html" class="btn btn-secondary">Back to homepage</a>
+
+  </div>
+
+  <script>
+    // Detect cancellation reason from PayPal (optional)
+    const params = new URLSearchParams(window.location.search);
+    const reason = params.get("reason");
+
+    if (reason) {
+      const box = document.getElementById("reasonBox");
+      box.style.display = "block";
+      box.textContent = "Reason: " + reason;
+    }
+  </script>
+
+</body>
+</html>

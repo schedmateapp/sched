@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SchedMate — Trial expired</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #182b5c 0, #050816 55%, #02040a 100%);
+      color: #f9fbff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .shell {
+      width: 100%;
+      max-width: 980px;
+      background: rgba(6, 14, 34, 0.94);
+      border-radius: 22px;
+      border: 1px solid rgba(117, 153, 255, 0.4);
+      box-shadow: 0 26px 70px rgba(0,0,0,0.7);
+      padding: 26px 26px 30px;
+      backdrop-filter: blur(14px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+      gap: 24px;
+    }
+    @media (max-width: 880px) {
+      .shell {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+    .header-badge {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 201, 80, 0.1);
+      color: #ffd66f;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 26px;
+    }
+    p {
+      margin: 0 0 16px;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #cdd7ff;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 14px;
+      font-size: 14px;
+      color: #aebcf5;
+    }
+    ul li {
+      margin-bottom: 6px;
+    }
+    ul li span {
+      margin-right: 6px;
+      color: #6fffba;
+    }
+    .disclaimer {
+      font-size: 12px;
+      color: #97a3e4;
+      opacity: 0.95;
+    }
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 14px;
+    }
+    @media (max-width: 640px) {
+      .plans {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+    .plan {
+      border-radius: 16px;
+      padding: 16px 14px 18px;
+      background: radial-gradient(circle at top, #253b79 0, #050b1e 60%);
+      border: 1px solid rgba(143, 173, 255, 0.5);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .plan--highlight {
+      border-color: #1f6bff;
+      box-shadow: 0 0 20px rgba(31, 107, 255, 0.45);
+      position: relative;
+      overflow: hidden;
+    }
+    .popular-tag {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      font-size: 10px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(31, 107, 255, 0.15);
+      color: #9bc3ff;
+      border: 1px solid rgba(103, 165, 255, 0.8);
+    }
+    .plan-name {
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .plan-price {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .plan-price span {
+      font-size: 12px;
+      font-weight: 400;
+      color: #9eb2ff;
+    }
+    .plan-desc {
+      font-size: 13px;
+      color: #b7c6ff;
+      min-height: 40px;
+    }
+    .plan-cta {
+      margin-top: 10px;
+    }
+    .plan-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 14px;
+      font-size: 13px;
+      border-radius: 999px;
+      border: 0;
+      cursor: pointer;
+      text-decoration: none;
+      color: #fff;
+      background: linear-gradient(135deg, #1f6bff, #3d8cff);
+      box-shadow: 0 10px 24px rgba(19, 91, 222, 0.55);
+      transition: 0.18s ease;
+      width: 100%;
+    }
+    .plan-btn:hover { transform: translateY(-1px); }
+    .plan-note {
+      font-size: 11px;
+      color: #97a7ff;
+      margin-top: 6px;
+    }
+    .muted-link {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 13px;
+      color: #9fb4ff;
+      text-decoration: none;
+    }
+    .muted-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section>
+      <div class="header-badge">7-day trial ended</div>
+      <h1>Your trial is over — keep your schedule running.</h1>
+      <p>
+        Your free SchedMate workspace has reached the end of its trial.  
+        To keep booking jobs, saving clients, and tracking your schedule, choose a plan below.
+      </p>
+      <ul>
+        <li><span>•</span>Unlimited clients & bookings (fair-use)</li>
+        <li><span>•</span>Today view, CRM, and job schedule in one place</li>
+        <li><span>•</span>Built for cleaners, AC techs, handymen, and solo pros</li>
+      </ul>
+      <p class="disclaimer">
+        Your data is kept safely in your account. Once you subscribe, everything instantly unlocks again.
+      </p>
+      <a href="billing.html" class="muted-link">Go back to billing settings instead →</a>
+    </section>
+
+    <section class="plans">
+      <article class="plan">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">$9.99 <span>/ month</span></div>
+        <div class="plan-desc">
+          For solo cleaners and techs who want a simple schedule they can trust.
+        </div>
+        <div class="plan-cta">
+          <a
+            href="https://www.paypal.com/ncp/payment/PHPCBQ674BZFC"
+            class="plan-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Start Starter with PayPal</a>
+          <div class="plan-note">Includes all core booking features.</div>
+        </div>
+      </article>
+
+      <article class="plan plan--highlight">
+        <div class="popular-tag">Most popular</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">$19.99 <span>/ month</span></div>
+        <div class="plan-desc">
+          For busy solo pros or 2–3 person teams who run bookings every day.
+        </div>
+        <div class="plan-cta">
+          <a
+            href="https://www.paypal.com/ncp/payment/QT2MN5JX324GU"
+            class="plan-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Upgrade to Pro with PayPal</a>
+          <div class="plan-note">Best balance of price and power.</div>
+        </div>
+      </article>
+
+      <article class="plan">
+        <div class="plan-name">Premium Team</div>
+        <div class="plan-price">$39.99 <span>/ month</span></div>
+        <div class="plan-desc">
+          For small teams who handle many jobs per day and multiple service areas.
+        </div>
+        <div class="plan-cta">
+          <a
+            href="https://www.paypal.com/ncp/payment/Z7MD24BMYDJ9W"
+            class="plan-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Get Premium Team with PayPal</a>
+          <div class="plan-note">Supports more staff and heavy usage.</div>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

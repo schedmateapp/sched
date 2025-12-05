@@ -1,0 +1,109 @@
+<aside class="sidebar">
+
+  <!-- BRAND -->
+  <div class="sidebar-brand">
+    <span class="logo">SchedMate</span>
+    <span class="badge badge-owner hidden" id="owner-badge">OWNER</span>
+  </div>
+
+  <!-- ========================
+       DASHBOARD
+  ========================= -->
+  <div class="nav-group">
+    <div class="nav-group-title">Dashboard</div>
+    <button class="nav-item active" data-view="overview">
+      <span class="icon">📊</span>
+      <span class="label">Overview</span>
+    </button>
+  </div>
+
+  <!-- ========================
+       CRM
+  ========================= -->
+  <div class="nav-group">
+    <div class="nav-group-title">CRM</div>
+
+    <button class="nav-item" data-view="clients">
+      <span class="icon">📇</span>
+      <span class="label">Clients</span>
+    </button>
+
+    <button class="nav-item locked" data-view="timeline">
+      <span class="icon">🕘</span>
+      <span class="label">Timeline</span>
+      <span class="lock">🔒</span>
+    </button>
+
+    <button class="nav-item locked">
+      <span class="icon">📝</span>
+      <span class="label">Notes</span>
+      <span class="lock">🔒</span>
+    </button>
+  </div>
+
+  <!-- ========================
+       SCHEDULING
+  ========================= -->
+  <div class="nav-group">
+    <div class="nav-group-title">Scheduling</div>
+
+    <button class="nav-item" data-view="bookings">
+      <span class="icon">📅</span>
+      <span class="label">Bookings</span>
+    </button>
+
+    <button class="nav-item locked">
+      <span class="icon">🗓️</span>
+      <span class="label">Calendar</span>
+      <span class="lock">🔒</span>
+    </button>
+  </div>
+
+  <!-- ========================
+       INSIGHTS
+  ========================= -->
+  <div class="nav-group">
+    <div class="nav-group-title">Insights</div>
+
+    <button class="nav-item locked">
+      <span class="icon">📈</span>
+      <span class="label">Analytics</span>
+      <span class="lock">🔒</span>
+    </button>
+
+    <button class="nav-item locked">
+      <span class="icon">📊</span>
+      <span class="label">Reports</span>
+      <span class="lock">🔒</span>
+    </button>
+  </div>
+
+  <!-- ========================
+       WORKSPACE
+  ========================= -->
+  <div class="nav-group nav-bottom">
+    <div class="nav-group-title">Workspace</div>
+
+    <button class="nav-item" data-view="settings">
+      <span class="icon">⚙️</span>
+      <span class="label">Settings</span>
+    </button>
+
+    <a class="nav-item" href="/billing/manage" data-allow-when-locked>
+      <span class="icon">💳</span>
+      <span class="label">Billing</span>
+    </a>
+
+    <button class="nav-item locked">
+      <span class="icon">👥</span>
+      <span class="label">Team</span>
+      <span class="lock">🔒</span>
+    </button>
+
+    <button class="nav-item danger" id="logout-btn">
+      <span class="icon">🚪</span>
+      <span class="label">Logout</span>
+    </button>
+  </div>
+
+</aside>

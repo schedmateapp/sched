@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SchedMate — Smart Scheduling for Service Pros</title>
+
+  <!-- ✅ ABSOLUTE PATH (IMPORTANT) -->
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+
+<body>
+
+  <!-- ======================= -->
+  <!-- HERO SECTION -->
+  <!-- ======================= -->
+  <div class="page-shell">
+    <header class="card" style="display:flex;flex-wrap:wrap;gap:20px;align-items:center;">
+      <div style="flex:1 1 260px;">
+        <p class="text-muted" style="font-size:.8rem;margin:0 0 6px;">
+          Built for cleaners, AC techs, handymen & more
+        </p>
+        <h1 style="margin:0 0 8px;font-size:1.9rem;">
+          Keep your day fully booked, never double-booked.
+        </h1>
+        <p class="text-muted" style="max-width:420px;">
+          SchedMate is the simple scheduling & booking workspace for solo service pros and small teams.
+        </p>
+
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;">
+          <a href="/auth/signup.html" class="btn">Start 7-day free trial</a>
+          <a href="/auth/login.html" class="btn btn-outline">Log in</a>
+        </div>
+      </div>
+
+      <div style="flex:1 1 260px;">
+        <div class="card" style="box-shadow:none;border:1px solid #e5e7eb;">
+          <p class="text-muted" style="font-size:.8rem;margin:0 0 6px;">Today • Upcoming jobs</p>
+          <table class="table-shell">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Client</th>
+                <th>Service</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>9:00</td>
+                <td>Rivera Residence</td>
+                <td>AC cleaning</td>
+                <td>On the way</td>
+              </tr>
+              <tr>
+                <td>13:30</td>
+                <td>Luna Salon</td>
+                <td>Deep clean</td>
+                <td>Pending</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </header>
+
+    <!-- ======================= -->
+    <!-- WHY SCHEDMATE -->
+    <!-- ======================= -->
+    <section class="mt-4" style="max-width:1120px;margin:0 auto 2.3rem;">
+      <div class="card" style="padding:18px;">
+        <div style="display:flex;flex-wrap:wrap;gap:14px;">
+          <div style="flex:1 1 260px;">
+            <p class="text-xs text-muted" style="letter-spacing:.08em;text-transform:uppercase;">
+              Why SchedMate
+            </p>
+            <h2 style="font-size:1.15rem;margin:6px 0;">
+              Stop using notebooks, chats, and spreadsheets for your schedule.
+            </h2>
+            <p class="text-sm text-muted">
+              SchedMate keeps everything — bookings, clients, and reporting — in one clean workspace.
+            </p>
+          </div>
+
+          <div style="flex:1 1 260px;">
+            <ul class="text-sm text-muted" style="padding-left:18px;line-height:1.7;">
+              <li>See today’s jobs at a glance</li>
+              <li>Update client info quickly</li>
+              <li>Track completed vs scheduled</li>
+              <li>Timezone & service hours support</li>
+            </ul>
+          </div>
+
+          <div style="flex:0 0 220px;">
+            <div class="card" style="padding:12px;">
+              <p class="text-xs text-muted">Coming soon</p>
+              <ul class="text-xs text-muted" style="padding-left:16px;">
+                <li>SMS / email reminders</li>
+                <li>Revenue reports</li>
+                <li>PayPal subscriptions</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= -->
+    <!-- TESTIMONIALS -->
+    <!-- ======================= -->
+    <section class="mt-4" style="max-width:1120px;margin:0 auto 2.3rem;">
+      <div class="card" style="padding:18px;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;">
+          <figure class="quote-card">
+            <blockquote class="text-sm text-muted">
+              “Before SchedMate, I was guessing which jobs were next. Now my week is organized.”
+            </blockquote>
+            <figcaption class="text-xs text-muted">Marissa, home cleaner</figcaption>
+          </figure>
+
+          <figure class="quote-card">
+            <blockquote class="text-sm text-muted">
+              “My team knows exactly where to go tomorrow. No more midnight messages.”
+            </blockquote>
+            <figcaption class="text-xs text-muted">Rafael, AC technician</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <footer class="mt-4 text-muted" style="font-size:.8rem;text-align:center;">
+      SchedMate © <span id="year"></span>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

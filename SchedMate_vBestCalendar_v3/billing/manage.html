@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Subscription – SchedMate</title>
+
+  <!-- GLOBAL CSS -->
+  <link rel="stylesheet" href="/css/app.css" />
+
+  <!-- SUPABASE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/supabaseClient.js"></script>
+</head>
+
+<body>
+<main class="shell">
+  <section>
+    <h1>Your SchedMate Plan</h1>
+    <p class="lead">View your subscription and billing status.</p>
+
+    <div id="status"></div>
+    <div id="meta" class="meta-grid"></div>
+    <p id="note" class="note">Loading…</p>
+  </section>
+
+  <section class="right">
+    <a href="https://www.paypal.com/myaccount/autopay/" target="_blank" class="btn primary">
+      Manage subscription on PayPal
+    </a>
+
+    <a href="/billing/index.html" class="btn outline">View plans & pricing</a>
+    <a href="/dashboard/" class="btn outline">Back to dashboard</a>
+
+    <p class="note">Changes made in PayPal may take a few minutes to reflect here.</p>
+    <p class="note">Need help? <a href="mailto:support@schedmate.com">support@schedmate.com</a></p>
+  </section>
+</main>
+
+<script>
+/* ================================
+   SINGLE SOURCE OF TRUTH
+================================ */
+async function getBillingState(supabase, userId) {
+  const { data } = await supabase
+    .from("billing")
+    .select("status, trial_end")
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  if (!data) return { status: "expired" };
+
+  if (data.status === "active") return { status: "active" };
+
+  if (data.status === "trial") {
+    const expired = data.trial_end
+      ? new Date(data.trial_end) < new Date()
+      : false;
+    return { status: expired ? "expired" : "trial" };
+  }
+
+  return { status: "expired" };
+}
+
+/* ================================
+   INIT PAGE
+================================ */
+(async () => {
+  const supabase = window.supabaseClient;
+
+  // ✅ Require login
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) {
+    window.location.href = "/auth/login.html";
+    return;
+  }
+
+  const user = session.user;
+
+  // ✅ Get billing state
+  const billingState = await getBillingState(supabase, user.id);
+
+  const statusEl = document.getElementById("status");
+  const metaEl   = document.getElementById("meta");
+  const noteEl   = document.getElementById("note");
+
+  // ✅ STATUS PILL
+  statusEl.innerHTML = `
+    <div class="status-pill ${billingState.status}">
+      <span class="dot"></span>${billingState.status}
+    </div>
+  `;
+
+  // ✅ META INFO
+  metaEl.innerHTML = `
+    <div>
+      <div class="meta-label">Status</div>
+      <div class="meta-value">${billingState.status}</div>
+    </div>
+    <div>
+      <div class="meta-label">Plan</div>
+      <div class="meta-value">
+        ${billingState.status === "active" ? "Pro" : "Starter"}
+      </div>
+    </div>
+    <div>
+      <div class="meta-label">Email</div>
+      <div class="meta-value">${user.email}</div>
+    </div>
+  `;
+
+  // ✅ FOOTER NOTE
+  if (billingState.status === "active") {
+    noteEl.textContent = "Your subscription is active.";
+  } else if (billingState.status === "trial") {
+    noteEl.textContent = "You are currently on your free trial.";
+  } else {
+    noteEl.textContent = "Your subscription has expired. Please upgrade.";
+  }
+})();
+</script>
+</body>
+</html>

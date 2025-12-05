@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign up — SchedMate</title>
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="../css/app.css" />
+
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/supabaseClient.js"></script>
+</head>
+
+<body>
+  <div class="page-shell" style="max-width:520px;">
+    <div class="card">
+      <h1 style="margin:0 0 8px;font-size:1.4rem;">
+        Create your SchedMate workspace
+      </h1>
+      <p class="text-muted" style="margin:0 0 16px;font-size:.9rem;">
+        We’ll set up your profile, business and default settings.
+      </p>
+
+      <!-- ✅ SIGNUP FORM -->
+      <form id="signup-form" novalidate>
+        <div class="form-row">
+          <div>
+            <label for="full_name">Your name</label>
+            <input id="full_name" type="text" required />
+          </div>
+          <div>
+            <label for="business_name">Business name</label>
+            <input id="business_name" type="text" required />
+          </div>
+        </div>
+
+        <div class="form-row mt-2">
+          <div>
+            <label for="email">Email</label>
+            <input id="email" type="email" required />
+          </div>
+          <div>
+            <label for="phone">Phone</label>
+            <input id="phone" type="tel" />
+          </div>
+        </div>
+
+        <div class="form-row mt-2">
+          <div>
+            <label for="password">Password</label>
+            <input id="password" type="password" required />
+          </div>
+          <div>
+            <label for="timezone">Timezone</label>
+            <input
+              id="timezone"
+              type="text"
+              placeholder="Asia/Manila"
+              value="Asia/Manila"
+            />
+          </div>
+        </div>
+
+        <div class="mt-2">
+          <label for="address">Service area / address</label>
+          <input id="address" type="text" />
+        </div>
+
+        <div class="form-footer">
+          <button class="btn" type="submit">
+            Create workspace
+          </button>
+        </div>
+      </form>
+
+      <!-- ✅ AUTH MESSAGE -->
+      <p
+        id="auth-message"
+        class="text-muted mt-2"
+        style="font-size:.8rem;"
+      ></p>
+
+      <p class="text-muted" style="font-size:.8rem;">
+        Already have an account?
+        <a href="login.html">Log in</a>.
+      </p>
+
+      <p class="text-muted" style="font-size:.8rem;">
+        <a href="../index.html">&larr; Back to site</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ✅ AUTH LOGIC (single source of truth) -->
+  <script src="/js/auth.js"></script>
+</body>
+</html>

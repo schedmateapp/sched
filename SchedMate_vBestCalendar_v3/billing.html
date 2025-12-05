@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Billing – SchedMate</title>
+
+  <!-- ✅ Correct CSS path -->
+  <link rel="stylesheet" href="./css/app.css" />
+
+  <style>
+    body {
+      background: #0d1117;
+      color: #fff;
+      font-family: Inter, sans-serif;
+      padding: 40px;
+    }
+
+    .billing-container {
+      max-width: 900px;
+      margin: auto;
+      background: rgba(255,255,255,0.05);
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.4);
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: #b7b7b7;
+      margin-bottom: 32px;
+    }
+
+    .plans {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .plan-card {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 24px;
+      border-radius: 12px;
+      width: 48%;
+      min-width: 260px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .plan-card h2 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .price {
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .plan-features {
+      font-size: 14px;
+      color: #d0d0d0;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="billing-container">
+  <h1>Choose your SchedMate plan</h1>
+  <p class="subtitle">
+    Upgrade your workspace to unlock unlimited clients, bookings, and pro tools.
+  </p>
+
+  <div class="plans">
+
+    <!-- ✅ STARTER -->
+    <div class="plan-card">
+      <h2>Solo Beta</h2>
+      <div class="price">$11.99 <span style="font-size:14px;">/ month</span></div>
+      <div class="plan-features">
+        • For solo cleaners & techs<br>
+        • Unlimited clients & bookings<br>
+        • Full CRM & scheduler<br>
+      </div>
+      <div id="paypal-starter"></div>
+    </div>
+
+    <!-- ✅ PRO -->
+    <div class="plan-card">
+      <h2>Pro Team</h2>
+      <div class="price">$19.99 <span style="font-size:14px;">/ month</span></div>
+      <div class="plan-features">
+        • Team access<br>
+        • Job assignment<br>
+        • Advanced scheduling tools<br>
+      </div>
+      <div id="paypal-pro"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ✅ Supabase -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="./js/supabaseClient.js"></script>
+
+<!-- ✅ PayPal SDK (SANDBOX) -->
+<script src="https://www.paypal.com/sdk/js?client-id=AVs8DSrPnLk1qX13Uv24Z-JJX0buB8D5sBCKu0oMgvRgkN2D4RsAJRV64HOTlb8hNAyomvnrV0X2LGhu&vault=true&intent=subscription"></script>
+
+<script>
+/* ===============================
+   AUTH CHECK ONLY
+================================ */
+const supabase = window.supabaseClient;
+
+async function ensureUser() {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) {
+    window.location.href = "/auth/login.html";
+    return null;
+  }
+  return session.user;
+}
+
+/* ===============================
+   PAYPAL BUTTON
+================================ */
+function renderPaypal(container, planId) {
+  paypal.Buttons({
+    style: {
+      shape: "pill",
+      color: "silver",
+      layout: "vertical",
+      label: "subscribe"
+    },
+
+    createSubscription(data, actions) {
+      return actions.subscription.create({
+        plan_id: planId
+      });
+    },
+
+    onApprove(data) {
+      // ✅ Redirect ONLY — database handled in success.html
+      window.location.href =
+        "/billing/success.html?subscription_id=" + data.subscriptionID;
+    },
+
+    onError(err) {
+      console.error("PayPal error", err);
+      alert("Payment failed. Please try again.");
+    }
+  }).render(container);
+}
+
+/* ===============================
+   INIT
+================================ */
+ensureUser().then(() => {
+  // ✅ REAL SANDBOX PLAN IDS
+  renderPaypal("#paypal-starter", "P-87257890ME022103LNEU4MEA");
+  renderPaypal("#paypal-pro", "P-7JC38715L1606351LNEU4MPI");
+});
+</script>
+
+</body>
+</html>

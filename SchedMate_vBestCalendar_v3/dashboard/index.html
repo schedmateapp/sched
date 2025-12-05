@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SchedMate — Dashboard</title>
+
+  <!-- Global styles -->
+  <link rel="stylesheet" href="../css/app.css" />
+  <link rel="stylesheet" href="dashboard.css?v=FINAL" />
+  <link rel="icon" href="/favicon.ico" />
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabaseClient.js"></script>
+
+  <!-- Dashboard logic -->
+  <script src="./dashboard.js" defer></script>
+</head>
+
+<body class="dashboard-shell" data-theme="dark">
+
+<!-- =====================
+     SIDEBAR (A1 UPGRADED — FIXED)
+===================== -->
+<aside id="sidebar" class="sidebar">
+
+  <!-- TOP -->
+  <div class="sidebar-top">
+    <div class="logo">
+      <span class="logo-mark">S</span>
+      <span class="logo-text">SchedMate</span>
+    </div>
+
+    <button
+      id="sidebar-toggle"
+      class="sidebar-toggle"
+      title="Collapse sidebar"
+    >
+      ☰
+    </button>
+  </div>
+
+  <!-- NAV -->
+  <nav class="sidebar-nav">
+
+    <!-- BUSINESS -->
+    <div class="nav-section">
+      <div class="nav-label">Business</div>
+
+      <button class="nav-item locked" data-view="services" data-tooltip="Services (Pro)">
+        <span class="icon">🧰</span>
+        <span class="text">Services</span>
+        <span class="lock">PRO</span>
+      </button>
+
+      <button class="nav-item locked" data-view="invoices" data-tooltip="Invoices (Pro)">
+        <span class="icon">🧾</span>
+        <span class="text">Invoices</span>
+        <span class="lock">PRO</span>
+      </button>
+
+      <button class="nav-item locked" data-view="payments" data-tooltip="Payments (Pro)">
+        <span class="icon">💳</span>
+        <span class="text">Payments</span>
+        <span class="lock">PRO</span>
+      </button>
+    </div>
+
+    <!-- WORKSPACE -->
+    <div class="nav-section">
+      <div class="nav-label">Workspace</div>
+<button class="nav-item" data-view="calendar" data-tooltip="Calendar">
+  <span class="icon">🗓️</span>
+  <span class="text">Calendar</span>
+</button>
+      <button class="nav-item active" data-view="overview" data-tooltip="Dashboard">
+        <span class="icon">🏠</span>
+        <span class="text">Dashboard</span>
+      </button>
+
+      <button class="nav-item" data-view="clients" data-tooltip="Clients">
+        <span class="icon">👤</span>
+        <span class="text">Clients</span>
+      </button>
+
+      <button class="nav-item" data-view="bookings" data-tooltip="Bookings">
+        <span class="icon">📅</span>
+        <span class="text">Bookings</span>
+      </button>
+
+      <button class="nav-item locked" data-view="timeline" data-tooltip="Timeline (Pro)">
+        <span class="icon">🕒</span>
+        <span class="text">Timeline</span>
+        <span class="lock">🔒</span>
+      </button>
+    </div>
+    <!-- INSIGHTS -->
+    <div class="nav-section">
+      <div class="nav-label">Insights</div>
+
+      <button class="nav-item locked" data-view="analytics" data-tooltip="Analytics (Pro)">
+        <span class="icon">📊</span>
+        <span class="text">Analytics</span>
+        <span class="lock">PRO</span>
+      </button>
+    </div>
+
+    <!-- ACCOUNT -->
+    <div class="nav-section">
+      <div class="nav-label">Account</div>
+
+      <button class="nav-item" data-view="settings" data-tooltip="Settings">
+        <span class="icon">⚙️</span>
+        <span class="text">Settings</span>
+      </button>
+    </div>
+
+  </nav>
+
+  <!-- FOOTER -->
+  <div class="sidebar-footer">
+    <button id="logout-btn" class="logout-btn" data-tooltip="Logout">
+      <span class="icon">🚪</span>
+      <span class="text">Logout</span>
+    </button>
+  </div>
+
+</aside>
+
+<!-- =====================
+     MAIN CONTENT
+===================== -->
+<main class="dashboard-main">
+
+<!-- ===== OVERVIEW ===== -->
+<section id="view-overview" class="view view-active">
+  <h1 class="page-title">Today at a glance</h1>
+  <p class="page-desc">Track today’s jobs and active clients.</p>
+
+  <div class="action-row">
+    <button class="btn-primary btn-new-client">+ New Client</button>
+  </div>
+
+  <div id="trial-banner" class="trial-banner hidden">
+    <span id="trial-text"></span>
+    <a href="/billing/" class="trial-upgrade-btn">Upgrade</a>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-label">Jobs today</div>
+      <div id="kpi-today" class="kpi-value">0</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Active clients</div>
+      <div id="kpi-clients" class="kpi-value">0</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Completed this week</div>
+      <div id="kpi-completed" class="kpi-value">0</div>
+    </div>
+  </div>
+
+  <div id="overview-content"></div>
+</section>
+
+<!-- ===== CLIENTS ===== -->
+<section id="view-clients" class="view">
+
+  <div class="crm-header">
+    <h1 class="page-title">Clients</h1>
+    <p class="page-desc">Manage your customers and history.</p>
+
+    <div class="crm-actions-top">
+      <input id="crm-search" class="crm-search" placeholder="Search clients…" />
+      <button class="btn-primary btn-add-client">+ New Client</button>
+    </div>
+
+    <div class="crm-tag-row">
+      <button class="crm-tag active" data-tag="all">All</button>
+      <button class="crm-tag" data-tag="vip">VIP</button>
+      <button class="crm-tag" data-tag="recurring">Recurring</button>
+      <button class="crm-tag" data-tag="new">New</button>
+    </div>
+  </div>
+
+  <div id="crm-client-list" class="crm-list"></div>
+
+  <div id="crm-empty" class="crm-empty hidden">
+    <h3>No clients yet</h3>
+    <button class="btn-primary btn-add-client">+ Add Client</button>
+  </div>
+</section>
+
+<!-- ===== BOOKINGS ===== -->
+<section id="view-bookings" class="view"></section>
+<!-- ===== CALENDAR ===== -->
+<section id="view-calendar" class="view">
+
+  <!-- ✅ CALENDAR UX V2 ROOT -->
+  <div id="calendar-root" class="cal-root">
+    
+    <!-- Toolbar -->
+    <div class="cal-toolbar">
+      <button id="cal-prev" class="cal-nav-btn" type="button">←</button>
+
+      <div class="cal-period">
+        <span id="cal-period-label" class="cal-period-label">December 2025</span>
+      </div>
+
+      <button id="cal-next" class="cal-nav-btn" type="button">→</button>
+
+      <div class="cal-mode-toggle">
+        <button id="cal-mode-month" class="cal-mode-btn is-active" type="button">
+          Month
+        </button>
+        <button id="cal-mode-week" class="cal-mode-btn" type="button">
+          Week
+        </button>
+      </div>
+    </div>
+
+    <!-- Month View -->
+    <div id="cal-month-view" class="cal-month-view">
+      <div class="cal-weekday-row">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+      </div>
+      <div id="cal-month-grid" class="cal-month-grid"></div>
+    </div>
+
+    <!-- Week View -->
+    <div id="cal-week-view" class="cal-week-view is-hidden">
+      <div class="cal-week-header">
+        <div class="cal-week-time-col">Time</div>
+        <div class="cal-week-day-col">Mon</div>
+        <div class="cal-week-day-col">Tue</div>
+        <div class="cal-week-day-col">Wed</div>
+        <div class="cal-week-day-col">Thu</div>
+        <div class="cal-week-day-col">Fri</div>
+        <div class="cal-week-day-col">Sat</div>
+        <div class="cal-week-day-col">Sun</div>
+      </div>
+      <div id="cal-week-grid" class="cal-week-grid"></div>
+    </div>
+
+  </div>
+</section>
+<!-- ✅ ADD THESE EMPTY VIEWS (PASTE HERE) -->
+<section id="view-services" class="view"></section>
+<section id="view-invoices" class="view"></section>
+<section id="view-payments" class="view"></section>
+<section id="view-analytics" class="view"></section>
+<!-- ===== SETTINGS ===== -->
+<section id="view-settings" class="view">
+
+  <h1 class="page-title">Workspace settings</h1>
+  <p class="page-desc">Customize your workspace.</p>
+
+  <div class="section-card">
+
+    <h3>Appearance</h3>
+    <p>Customize your workspace look.</p>
+
+    <div class="settings-row">
+      <label style="display:flex;gap:10px;align-items:center;">
+        <input type="checkbox" id="theme-toggle">
+        <span>Light mode</span>
+      </label>
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<!-- =====================
+     CLIENT PROFILE MODAL
+===================== -->
+<div id="client-profile-modal" class="client-profile-modal hidden">
+  <div class="client-profile-content">
+
+    <button id="profile-close" class="profile-close">✕</button>
+
+   <div class="profile-header">
+
+  <!-- AVATAR (clickable + upload) -->
+  <div class="avatar-wrapper" id="avatar-click">
+    <img id="avatar-img" class="avatar hidden" />
+    <div id="avatar-letter" class="avatar">J</div>
+
+    <input
+      type="file"
+      id="avatar-upload"
+      accept="image/*"
+      hidden
+    />
+  </div>
+
+  <!-- NAME + PLAN -->
+  <div class="profile-info">
+    <h2 id="profile-name" class="profile-name"></h2>
+    <span class="chip chip-muted" id="profile-plan">regular</span>
+  </div>
+
+</div>
+
+    <div class="profile-body">
+
+      <div class="profile-left">
+
+        <div class="profile-section">
+  <div class="section-card">
+    <h3 class="section-title">Quick actions</h3>
+    <div class="quick-actions">
+      <button id="qa-call">📞 Call</button>
+      <button id="qa-sms">💬 SMS</button>
+      <button id="qa-email">✉️ Email</button>
+      <button id="qa-map">📍 Directions</button>
+      <button id="qa-add-booking">➕ Add Booking</button>
+    </div>
+  </div>
+</div>
+
+        <div class="profile-section">
+  <div class="section-card">
+    <h3 class="section-title">Notes</h3>
+    <textarea id="profile-notes" class="notes-box"></textarea>
+
+    <div style="display:flex; gap:8px; margin-top:10px;">
+      <button id="save-notes-btn" class="btn-primary">Save Notes</button>
+      <button id="edit-client-btn" class="btn-secondary">✏️ Edit Client</button>
+      <button id="delete-client-btn" class="btn-danger">🗑️ Delete Client</button>
+    </div>
+  </div>
+</div>
+
+<div class="profile-section">
+  <div class="section-card">
+    <h3 class="section-title">Activity</h3>
+
+    <div id="timeline-list" class="hidden"></div>
+
+    <div id="timeline-empty" class="empty-state">
+      <div class="empty-icon">🕒</div>
+      <h2>Your activity timeline</h2>
+      <p>
+        Client actions and booking updates will appear here.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+            </div> <!-- END profile-left -->
+
+      <div class="profile-right">
+        <div class="profile-section">
+          <div class="section-card">
+            <h3 class="section-title">Booking history</h3>
+            <div id="profile-bookings"></div>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- END profile-body -->
+
+
+    </div>
+  </div>
+</div>
+
+<!-- =====================
+     ADD CLIENT MODAL
+===================== -->
+<div id="add-client-modal" class="modal hidden">
+  <div class="modal-card">
+    <h3>Add Client</h3>
+
+    <input id="client-name" placeholder="Name" />
+    <input id="client-phone" placeholder="Phone" />
+    <input id="client-email" placeholder="Email" />
+    <input id="client-address" placeholder="Address" />
+    <textarea id="client-notes" placeholder="Notes"></textarea>
+
+    <div class="modal-actions">
+      <button id="close-add-client">Cancel</button>
+      <button id="save-client-btn" class="btn-primary">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- =====================
+     ADD BOOKING MODAL
+===================== -->
+<div id="add-booking-modal" class="modal-shell hidden">
+  <div class="modal-overlay"></div>
+  <div class="modal-content modal-sm">
+    <div class="modal-header">
+      <h2>Add Booking</h2>
+      <button id="closeAddBooking" class="modal-close">✕</button>
+    </div>
+
+    <input
+  id="booking-client-name"
+  placeholder="Client (auto-selected)"
+  disabled
+  class="input-readonly"
+/>
+    <input id="booking-date" type="date" />
+    <input id="booking-time" type="time" />
+    <input id="booking-service" placeholder="Service" />
+    <textarea id="booking-notes" placeholder="Notes"></textarea>
+
+    <button id="saveBookingBtn" class="btn-primary">Save Booking</button>
+  </div>
+</div>
+
+<!-- =====================
+     EDIT BOOKING MODAL (POLISHED)
+===================== -->
+<div id="edit-booking-modal" class="modal-shell hidden">
+  <div class="modal-overlay"></div>
+
+  <div class="modal-content modal-sm">
+    <div class="modal-header">
+      <div>
+        <h2>Edit Booking</h2>
+        <p class="modal-sub">Update date, time, service or status</p>
+      </div>
+      <button id="close-edit-booking"
+              class="modal-close"
+              aria-label="Close edit booking">✕</button>
+    </div>
+
+    <label class="form-label">Date</label>
+    <input type="date" id="edit-booking-date" />
+
+    <label class="form-label">Time</label>
+    <input type="time" id="edit-booking-time" />
+
+    <label class="form-label">Service</label>
+    <input id="edit-booking-service" placeholder="Service name" />
+
+    <label class="form-label">Status</label>
+    <select id="edit-booking-status">
+      <option value="scheduled">Scheduled</option>
+      <option value="completed">Completed</option>
+      <option value="cancelled">Cancelled</option>
+    </select>
+
+    <div class="modal-actions">
+      <button class="btn-secondary" id="close-edit-booking-alt">
+        Cancel
+      </button>
+      <button id="save-edit-booking" class="btn-primary">
+        Save changes
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- =====================
+     UPGRADE MODAL
+===================== -->
+<div id="upgrade-modal" class="modal hidden">
+  <div class="modal-card">
+    <h3>Upgrade Required</h3>
+    <p id="upgrade-msg"></p>
+    <div class="modal-actions">
+      <button id="upgrade-not-now">Not now</button>
+      <button id="upgrade-pro-btn" class="btn-primary">Upgrade</button>
+    </div>
+  </div>
+</div>
+<!-- =====================
+     CALENDAR DAY DETAILS MODAL
+===================== -->
+<div id="calendar-day-modal" class="modal-shell hidden">
+  <div class="modal-overlay"></div>
+
+  <div class="modal-content modal-sm">
+    <div class="modal-header">
+      <div>
+        <h2 id="calendar-day-title">Bookings</h2>
+        <p class="modal-sub" id="calendar-day-sub"></p>
+      </div>
+      <button id="close-calendar-day" class="modal-close">✕</button>
+    </div>
+
+    <div id="calendar-day-list" class="calendar-day-list">
+      <!-- injected by JS -->
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<div id="expired-overlay" class="expired-overlay hidden">
+  <div class="expired-card">
+    <h3>🔒 Trial Ended</h3>
+    <p>
+      You can still view your data, but actions are locked.<br/>
+      Upgrade to continue managing clients & bookings.
+    </p>
+    <button id="expired-upgrade-btn" class="btn-primary">
+      Upgrade to Pro
+    </button>
+  </div>
+</div>
+<!-- ✅ CALENDAR DAY BOOKINGS MODAL (V2) -->
+<div id="cal-day-modal" class="cal-modal is-hidden">
+  <div class="cal-modal-backdrop"></div>
+  <div class="cal-modal-panel">
+    <div class="cal-modal-header">
+      <div>
+        <h2 class="cal-modal-title">Bookings</h2>
+        <p id="cal-day-modal-date" class="cal-modal-subtitle"></p>
+      </div>
+      <button id="cal-day-modal-close" class="cal-modal-close">✕</button>
+    </div>
+
+    <div id="cal-day-modal-list" class="cal-day-booking-list"></div>
+  </div>
+</div>
+<script>
+(function () {
+  const toggle = document.getElementById("theme-toggle");
+  if (!toggle) return;
+
+  const saved = localStorage.getItem("theme");
+  if (saved) {
+    document.body.dataset.theme = saved;
+    toggle.checked = saved === "light";
+  }
+
+  toggle.addEventListener("change", () => {
+    const theme = toggle.checked ? "light" : "dark";
+    document.body.dataset.theme = theme;
+    localStorage.setItem("theme", theme);
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,2792 @@
+/* ============================================================
+   SCHEDMATE DASHBOARD — FINAL PRODUCTION CSS
+   ✅ Cleaned & merged
+   ✅ No duplicate rules
+   ✅ Stable z-index & click behavior
+============================================================ */
+
+/* ===================== ROOT ===================== */
+:root {
+  --bg-main: #071427;
+  --bg-alt: #0c1a33;
+  --bg-card: #0e1f3d;
+  --line: rgba(255,255,255,0.08);
+
+  --primary: #1e7bff;
+  --primary-glow: 0 0 25px rgba(30,123,255,0.45);
+
+  --text: #f3f7ff;
+  --text-muted: #9fb3d1;
+  --radius: 14px;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: linear-gradient(180deg,#071427,#0b1a30);
+  color: var(--text);
+}
+
+/* ===================== LAYOUT ===================== */
+.dashboard-shell {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.dashboard-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px 40px;
+  position: relative;
+}
+
+/* ===================== SIDEBAR ===================== */
+.sidebar {
+  width: 260px;
+  background: #0f172a;
+  color: #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  transition: width .2s ease;
+}
+
+.sidebar.collapsed {
+  width: 72px;
+}
+
+.sidebar-top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.logo-mark {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  background: #6366f1;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.logo-text {
+  transition: opacity .2s ease;
+}
+
+.sidebar.collapsed .logo-text {
+  display: none;
+}
+
+.sidebar-toggle {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.sidebar-nav {
+  flex: 1;
+}
+
+.nav-section {
+  margin-bottom: 20px;
+}
+
+.nav-label {
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #9ca3af;
+  margin-bottom: 8px;
+}
+
+/* ===================== NAV ITEM (SINGLE SOURCE) ===================== */
+.nav-item {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background .15s ease, transform .12s ease;
+}
+
+.nav-item:hover:not(.locked) {
+  background: rgba(99,102,241,0.12);
+  transform: translateX(2px);
+}
+
+.nav-item.active {
+  background: rgba(56,139,253,0.18);
+}
+
+.nav-item.active::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 60%;
+  border-radius: 4px;
+  background: linear-gradient(180deg,#60a5fa,#6366f1);
+  box-shadow: 0 0 12px rgba(99,102,241,.7);
+}
+
+.nav-item.locked {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.nav-item .lock {
+  margin-left: auto;
+  font-size: 11px;
+  background: rgba(255,255,255,.12);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.sidebar.collapsed .nav-label,
+.sidebar.collapsed .text {
+  display: none;
+}
+
+.sidebar.collapsed .nav-item {
+  justify-content: center;
+}
+
+/* ===================== TOOLTIP (SINGLE SOURCE) ===================== */
+.tooltip {
+  position: absolute;
+  left: 72px;
+  top: 50%;
+  transform: translateY(-50%) translateX(-6px);
+  background: rgba(15,23,42,0.98);
+  color: #e5e7eb;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all .15s ease;
+  z-index: 9999;
+}
+
+.sidebar.collapsed .nav-item:hover .tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* ===================== LOGOUT ===================== */
+.sidebar-footer {
+  margin-top: auto;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: #111827;
+  color: #e5e7eb;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background: #1f2937;
+}
+
+/* ===================== VIEWS ===================== */
+.view { display: none; }
+.view.view-active { display: block; }
+
+/* ===================== HEADERS ===================== */
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.page-desc {
+  color: var(--text-muted);
+  margin-top: -4px;
+}
+
+/* ===================== BUTTONS ===================== */
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(30,123,255,.35);
+}
+
+.btn-xs {
+  padding: 5px 9px;
+  font-size: 12px;
+  border-radius: 6px;
+  margin-left: 6px;
+}
+
+.btn-xs.btn-success {
+  background: linear-gradient(135deg,#2ecc71,#27ae60);
+}
+
+.btn-xs.btn-secondary {
+  background: rgba(255,255,255,0.1);
+}
+
+button.loading {
+  opacity: .7;
+  pointer-events: none;
+}
+
+/* ===================== KPI ===================== */
+.kpi-row {
+  display: flex;
+  gap: 20px;
+  margin-top: 26px;
+}
+
+.kpi-card {
+  flex: 1;
+  padding: 22px;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+}
+
+.kpi-value {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+/* ===================== CRM ===================== */
+.crm-header { margin-bottom: 24px; }
+
+.crm-actions-top {
+  margin-top: 14px;
+  display: flex;
+  gap: 12px;
+}
+
+.crm-search {
+  flex: 1;
+  padding: 12px;
+  border-radius: var(--radius);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--line);
+  color: var(--text);
+}
+
+.crm-tag-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.crm-tag {
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.crm-tag.active {
+  background: var(--primary);
+  box-shadow: var(--primary-glow);
+}
+
+.crm-list {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+
+  border: none;          /* remove table feel */
+  background: transparent;
+}
+
+.crm-client-row:hover {
+  background: rgba(255,255,255,0.04);
+}
+.crm-client-row {
+  flex-direction: column;
+  align-items: flex-start;
+
+  background: linear-gradient(180deg,#0e1f3d,#0a162c);
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+
+  padding: 18px;
+}
+.crm-client-contact {
+  margin-top: 4px;
+}
+
+.crm-client-name {
+  flex: 1;
+  font-weight: 600;
+}
+
+.crm-client-contact {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ===================== MODALS ===================== */
+.hidden { display: none !important; }
+
+.modal,
+.modal-shell {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,.45);
+  z-index: 1000;
+}
+/* ✅ FIX — allow clicks inside modal content */
+.modal-card {
+  pointer-events: auto;
+}
+
+.modal-card,
+.modal-content {
+  background: #0b1f3a;
+  border-radius: 14px;
+  padding: 22px;
+  color: #fff;
+}
+
+.client-profile-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  background: rgba(5,10,20,.85);
+  z-index: 1200;
+}
+
+.client-profile-modal.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#add-booking-modal { z-index: 1400; }
+.profile-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;      /* ✅ RIGHT, not left */
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+/* Modal stacking safety */
+#calendar-day-modal {
+  z-index: 1300;
+}
+
+#edit-booking-modal {
+  z-index: 1500;
+}
+
+.profile-close:hover {
+  background: rgba(255,255,255,0.16);
+}
+
+/* ===================== CHIPS ===================== */
+.chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.chip-success {
+  background: rgba(0,200,130,.2);
+  color: #3ee9b5;
+}
+
+.chip-warning {
+  background: rgba(255,193,7,.18);
+  color: #ffca28;
+}
+
+.chip-muted {
+  background: rgba(255,255,255,.08);
+  color: #9aa6b2;
+}
+
+/* ===================== TABLE ===================== */
+.table-shell tbody tr {
+  transition: background .15s ease, box-shadow .15s ease;
+}
+
+.table-shell tbody tr:hover {
+  background: rgba(0,153,255,.08);
+  box-shadow: inset 3px 0 0 #2da8ff;
+}
+
+.table-shell tbody tr:nth-child(even) {
+  background: rgba(255,255,255,.02);
+}
+
+/* ===================== TOAST ===================== */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2000;
+}
+
+/* ===================== BILLING LOCK ===================== */
+body.billing-locked .dashboard-main {
+  filter: blur(3px);
+  pointer-events: none;
+  opacity: .6;
+}
+
+body.billing-locked #upgrade-modal {
+  pointer-events: auto;
+  filter: none;
+  opacity: 1;
+}
+/* ================================
+   PHASE 3-B — EDIT BOOKING MODAL POLISH
+================================ */
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.modal-sub {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+}
+
+.modal-close:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.form-label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 6px;
+  color: var(--text-muted);
+}
+
+#edit-booking-modal input,
+#edit-booking-modal select {
+  width: 100%;
+  margin-bottom: 16px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+}
+
+#edit-booking-modal select option {
+  color: #000;
+}
+
+.btn-secondary {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.2);
+}
+.crm-tag.locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+/* ============================================================
+   PHASE 3-B — EDIT BOOKING MODAL UI POLISH ✅
+   ✅ Clear close button
+   ✅ Visible text
+   ✅ Better hierarchy
+============================================================ */
+
+/* 🔹 Modal shell enhancement */
+#edit-booking-modal .modal-card {
+  max-width: 420px;
+  width: 92%;
+  background: linear-gradient(180deg, #0d213f, #08172f);
+  border-radius: 18px;
+  padding: 26px;
+  position: relative;
+  box-shadow: 0 40px 90px rgba(0,0,0,.55);
+}
+
+/* 🔹 Better title */
+#edit-booking-modal h3 {
+  margin: 0 0 18px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #f5f8ff;
+}
+
+/* 🔹 Close (✕) button */
+#close-edit-booking {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background .15s ease, transform .12s ease;
+}
+
+#close-edit-booking:hover {
+  background: rgba(255,255,255,0.18);
+  transform: scale(1.05);
+}
+
+/* 🔹 Inputs & select — FULL VISIBILITY FIX */
+#edit-booking-modal input,
+#edit-booking-modal select {
+  width: 100%;
+  height: 46px;
+  margin-bottom: 14px;
+  padding: 0 14px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 10px;
+  color: #ffffff;                 /* ✅ TEXT FIX */
+  font-size: 14px;
+}
+
+#edit-booking-modal option {
+  color: #0b1220;                 /* ✅ DROPDOWN TEXT FIX */
+}
+
+/* 🔹 Input placeholder clarity */
+#edit-booking-modal input::placeholder {
+  color: #9fb3d1;
+}
+
+/* 🔹 Modal actions layout */
+#edit-booking-modal .modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+/* 🔹 Save button (primary) */
+#save-edit-booking {
+  flex: 1;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff;
+  border: none;
+  height: 44px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(37,99,235,.35);
+}
+
+#save-edit-booking:hover {
+  transform: translateY(-1px);
+}
+
+/* 🔹 Cancel button (neutral) */
+#edit-booking-modal .btn-secondary {
+  background: rgba(255,255,255,0.1);
+  color: #e5e7eb;
+  border: none;
+  height: 44px;
+  border-radius: 10px;
+  padding: 0 18px;
+}
+
+/* 🔹 Status select spacing */
+#edit-booking-status {
+  margin-bottom: 18px;
+}
+#client-profile-modal .modal-content {
+  max-width: 720px;
+  margin: auto;
+}
+/* ===== UX-A1 Button Micro Interactions ===== */
+button {
+  transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 14px 36px rgba(30,123,255,.45);
+}
+
+.btn-xs:hover {
+  filter: brightness(1.1);
+}
+
+button:disabled,
+button.locked {
+  cursor: not-allowed;
+  opacity: .55;
+}
+/* ===== UX-A2 Modal Motion ===== */
+.modal-shell,
+.modal {
+  animation: modalFade .18s ease-out forwards;
+}
+
+.modal-content {
+  animation: modalPop .22s cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+@keyframes modalFade {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@keyframes modalPop {
+  from {
+    transform: scale(.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+/* ===== UX-A3 Table Row Focus ===== */
+.table-shell tbody tr {
+  transition: background .15s ease, box-shadow .15s ease, transform .1s ease;
+}
+
+/* ===== UX-A4 Toast Polish ===== */
+.toast {
+  background: #0b1f3a;
+  color: #fff;
+  padding: 14px 18px;
+  margin-top: 10px;
+  border-radius: 12px;
+  box-shadow: 0 18px 42px rgba(0,0,0,.45);
+  animation: toastIn .25s ease-out;
+}
+
+.toast.success { border-left: 4px solid #3ee9b5; }
+.toast.error { border-left: 4px solid #ff5f5f; }
+.toast.warning { border-left: 4px solid #ffca28; }
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* ===== UX-A5 Client List Feedback ===== */
+.crm-client-row:active {
+  background: rgba(99,102,241,.12);
+}
+.active-row {
+  background: rgba(99,102,241,.18) !important;
+}
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid rgba(99,102,241,.8);
+  outline-offset: 2px;
+}
+.crm-client-row:hover {
+  transform: translateY(-1px);
+}
+#edit-booking-modal .form-label {
+  margin-top: 12px;
+}
+
+#edit-booking-modal input,
+#edit-booking-modal select {
+  margin-top: 4px;
+}
+#profile-bookings > div {
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.04);
+  margin-bottom: 8px;
+}
+#booking-client-name {
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+#client-select-hint {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* Client Profile — action buttons group */
+.profile-section .modal-actions,
+.profile-section .section-card > div {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0; /* ✅ prevents text clipping */
+}
+
+.profile-name {
+  margin: 0;
+  padding: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Secondary buttons consistency */
+.btn-secondary {
+  background: rgba(255,255,255,0.08);
+}
+
+/* Notes textarea tighter */
+.notes-box {
+  min-height: 90px;
+}
+
+/* Activity section */
+#timeline-list {
+  margin-top: 8px;
+}
+
+.empty-muted {
+  color: var(--text-muted);
+  font-size: 13px;
+  padding: 12px 0;
+}
+.client-profile-content {
+  position: relative;
+  width: 520px;              /* ✅ fixed readable width */
+  max-height: 80vh;          /* ✅ no tall wall */
+  overflow-y: auto;
+
+  background: linear-gradient(180deg, #0f1f3a, #0b162c);
+  border-radius: 22px;
+  padding: 28px 30px;
+  box-shadow: 0 60px 140px rgba(0,0,0,.65);
+}
+.profile-header input {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.profile-header .chip {
+  margin-top: 6px;
+}
+
+/* Primary */
+#save-notes-btn {
+  background: linear-gradient(135deg,#2563eb,#1d4ed8);
+}
+
+/* Secondary */
+#edit-client-btn {
+  background: rgba(255,255,255,0.08);
+}
+
+/* Destructive — isolate */
+
+.quick-actions button svg,
+.quick-actions button i {
+  opacity: 0.9;
+}
+.quick-actions button {
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #e5e7eb;
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background .15s ease, transform .12s ease;
+}
+.quick-actions button:hover {
+  background: rgba(99,102,241,.16);
+  transform: translateY(-1px);
+}
+#profile-bookings > div {
+  background: linear-gradient(180deg,#0e1f3d,#0a162c);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.client-profile-content {
+  padding: 26px 28px; /* instead of 28px 30px */
+}
+/* Custom scrollbar */
+.client-profile-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.client-profile-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.client-profile-content::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.18);
+  border-radius: 8px;
+}
+
+.client-profile-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.3);
+}
+.avatar-wrapper {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.avatar.hidden {
+  display: none;
+}
+
+.avatar-wrapper img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#2563eb,#1d4ed8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Primary action */
+#qa-call {
+  background: linear-gradient(135deg,#2563eb,#1d4ed8);
+  box-shadow: 0 6px 18px rgba(37,99,235,.35);
+  font-weight: 600;
+}
+
+/* Secondary actions */
+
+
+#delete-client-btn {
+  margin-left: auto;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-weight: 600;
+  background: linear-gradient(135deg,#dc2626,#b91c1c);
+  box-shadow: 0 8px 24px rgba(220,38,38,.35);
+  opacity: 0.85;
+}
+#profile-name {
+  padding-left: 8px !important;
+  overflow: visible !important;
+  text-indent: 0 !important;
+}
+#avatar-letter, #avatar-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* ===================== CALENDAR ===================== */
+.calendar-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.calendar-header h2 {
+  flex: 1;
+  text-align: center;
+  margin: 0;
+}
+
+/* ===============================
+   CALENDAR DAY DETAILS (PHASE 2)
+================================ */
+
+.calendar-day-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.calendar-booking-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.calendar-booking-time {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.calendar-booking-client {
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.calendar-booking-service {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.calendar-booking-actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
+/* ===== Calendar Layout Frame ===== */
+.calendar-frame {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ===== Calendar polish ===== */
+
+.calendar-cell {
+  position: relative;
+  min-height: 110px;
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  cursor: pointer;
+  transition: background .18s ease, transform .15s ease;
+}
+
+.calendar-cell:hover {
+  background: rgba(99,102,241,0.10);
+  transform: translateY(-2px);
+}
+
+.calendar-cell.today {
+  background: rgba(0, 153, 255, 0.25);
+  box-shadow: inset 0 0 0 1px rgba(0,153,255,0.45);
+}
+.calendar-cell.today {
+  outline: 2px solid var(--primary);
+}
+.calendar-cell.weekend .cal-day {
+  opacity: 0.55;
+}
+.cal-dot {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  background: #4f46e5;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.35);
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 720px;
+  margin: 0 auto 18px;
+}
+
+.calendar-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+.calendar-day-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.calendar-booking-card {
+  background: rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 6px;
+}
+
+.calendar-booking-time {
+  font-weight: 600;
+  color: #93c5fd;
+}
+
+.calendar-booking-client {
+  font-weight: 600;
+}
+
+.calendar-booking-service {
+  opacity: 0.75;
+  font-size: 13px;
+}
+
+.calendar-booking-actions {
+  grid-column: span 2;
+  margin-top: 6px;
+}
+.calendar-cell:active {
+  transform: scale(0.96);
+}
+.calendar-cell {
+  position: relative;
+  padding: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.calendar-cell:hover {
+  background: rgba(99, 102, 241, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+}
+.calendar-cell.today {
+  background: linear-gradient(
+    145deg,
+    rgba(99, 102, 241, 0.18),
+    rgba(99, 102, 241, 0.08)
+  );
+  border: 1px solid rgba(99, 102, 241, 0.4);
+}
+
+.calendar-cell.today .cal-day {
+  color: #4f46e5;
+  font-weight: 700;
+}
+.calendar-cell.weekend {
+  opacity: 0.85;
+}
+
+.calendar-cell.weekend .cal-day {
+  color: #ef4444;
+}
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+#cal-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.calendar-header button {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.calendar-header button:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+.calendar-booking-card {
+  background: var(--card-bg, #fff);
+  border-radius: 12px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 70px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+  border: 1px solid rgba(0,0,0,0.06);
+  transition: all 0.15s ease;
+}
+
+.calendar-booking-card:hover {
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.calendar-booking-time {
+  font-weight: 700;
+  color: #4f46e5;
+  font-size: 13px;
+}
+
+.calendar-booking-client {
+  font-weight: 600;
+}
+
+.calendar-booking-service {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.calendar-booking-actions button {
+  font-size: 12px;
+  padding: 5px 8px;
+}
+.calendar-cell {
+  user-select: none;
+}
+/* ================================
+   CALENDAR CLIENT DOTS
+================================ */
+
+.cal-dot-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.cal-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.cal-dot.more {
+  font-size: 10px;
+  color: #6b7280;
+  margin-left: 2px;
+}
+.client-color-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+/* =========================
+   MONTH CALENDAR (FIX)
+========================= */
+
+.calendar-week-grid {
+  display: none; /* default hidden */
+  width: 100%;
+}
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+}/* ===== Calendar Header (Single Source) ===== */
+.calendar-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.calendar-title-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+#cal-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+.calendar-switch {
+  display: flex;
+  gap: 6px;
+  background: rgba(255,255,255,0.06);
+  padding: 4px;
+  border-radius: 999px;
+}
+
+.calendar-switch button {
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+
+.calendar-switch button.active {
+  background: linear-gradient(135deg,#2563eb,#1d4ed8);
+  color: #fff;
+}
+.calendar-cell .cal-day {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.calendar-cell.weekend {
+  opacity: 0.75; /* not lower */
+}
+/* ===================== CLIENTS CENTER FIX ===================== */
+
+#view-clients {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+/* ================================
+   CALENDAR UX V2
+   All cal-* prefixed (isolated)
+================================ */
+
+.cal-root {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Toolbar */
+.cal-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: rgba(3, 13, 30, 0.9);
+  border: 1px solid rgba(120, 165, 255, 0.16);
+}
+
+.cal-period {
+  flex: 1;
+  text-align: center;
+}
+
+.cal-period-label {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.cal-nav-btn {
+  border: none;
+  outline: none;
+  border-radius: 999px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  background: rgba(12, 25, 50, 0.9);
+  color: #e4f1ff;
+  transition: background 0.15s ease, transform 0.08s ease;
+}
+
+.cal-nav-btn:hover {
+  background: rgba(40, 89, 203, 0.85);
+  transform: translateY(-1px);
+}
+
+.cal-mode-toggle {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(9, 22, 47, 0.9);
+  border: 1px solid rgba(120, 165, 255, 0.3);
+}
+
+.cal-mode-btn {
+  min-width: 72px;
+  border-radius: 999px;
+  border: none;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  background: transparent;
+  color: #a5b8d8;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.08s ease;
+}
+
+.cal-mode-btn.is-active {
+  background: #1677ff;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.cal-mode-btn:not(.is-active):hover {
+  background: rgba(22, 119, 255, 0.12);
+}
+
+/* Month View */
+
+.cal-month-view {
+  background: rgba(3, 13, 30, 0.9);
+  border-radius: 20px;
+  padding: 12px 12px 16px;
+  border: 1px solid rgba(120, 165, 255, 0.18);
+}
+
+.cal-weekday-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 8px;
+  padding: 0 6px;
+  color: #8ea4c7;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cal-weekday-row > div {
+  display: flex;
+  justify-content: center;
+}
+
+.cal-month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: 96px;
+  gap: 8px;
+}
+
+.cal-day {
+  position: relative;
+  border-radius: 14px;
+  padding: 6px 8px;
+  background: linear-gradient(145deg, rgba(7, 20, 45, 0.95), rgba(5, 12, 32, 0.96));
+  box-shadow: 0 0 0 1px rgba(10, 35, 80, 0.7);
+  color: #d6e4ff;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, transform 0.08s ease, background 0.15s ease;
+}
+
+.cal-day:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 1px rgba(99, 158, 255, 0.9), 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.cal-day-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.cal-day-number {
+  font-weight: 600;
+}
+
+.cal-day-badges {
+  display: flex;
+  gap: 4px;
+}
+
+.cal-day-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #4cc9f0;
+}
+
+.cal-day-bar {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 8px;
+  height: 5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #3abff8, #22c55e);
+  opacity: 0.8;
+}
+
+.cal-day-full {
+  background: linear-gradient(150deg, #0f172a, #1d4ed8);
+}
+
+.cal-day-today {
+  box-shadow: 0 0 0 1px rgba(98, 174, 255, 0.95);
+}
+
+.cal-day-selected {
+  box-shadow: 0 0 0 2px #1677ff;
+}
+
+.cal-day-other-month {
+  opacity: 0.45;
+}
+
+/* Short list of booking labels (max 3) */
+.cal-day-booking-labels {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 10px;
+  color: #a4c2ff;
+}
+
+/* Week View */
+
+.cal-week-view {
+  background: rgba(3, 13, 30, 0.9);
+  border-radius: 20px;
+  padding: 12px 12px 16px;
+  border: 1px solid rgba(120, 165, 255, 0.18);
+}
+
+.cal-week-header {
+  display: grid;
+  grid-template-columns: 70px repeat(7, 1fr);
+  padding: 0 4px 8px;
+  font-size: 11px;
+  color: #8ea4c7;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cal-week-time-col {
+  text-align: left;
+}
+
+.cal-week-day-col {
+  text-align: center;
+}
+
+.cal-week-grid {
+  max-height: 520px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.cal-week-row {
+  display: grid;
+  grid-template-columns: 70px repeat(7, 1fr);
+  min-height: 44px;
+  border-bottom: 1px solid rgba(15, 35, 80, 0.7);
+}
+
+.cal-week-time {
+  font-size: 11px;
+  color: #7283a5;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 6px;
+}
+
+.cal-week-cell {
+  position: relative;
+  border-left: 1px solid rgba(12, 28, 70, 0.6);
+  padding: 3px;
+}
+
+/* Booking pills in week view */
+
+.cal-pill {
+  position: relative;
+  border-radius: 10px;
+  padding: 3px 8px;
+  font-size: 11px;
+  line-height: 1.3;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.8);
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.12s ease;
+}
+
+.cal-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.45);
+}
+
+.cal-pill-title {
+  font-weight: 500;
+}
+
+.cal-pill-time {
+  font-size: 10px;
+  opacity: 0.9;
+}
+
+/* Status colors */
+.cal-pill-status-scheduled {
+  background: rgba(37, 99, 235, 0.9);
+  color: #f9fafb;
+}
+
+.cal-pill-status-completed {
+  background: rgba(22, 163, 74, 0.95);
+  color: #ecfdf3;
+}
+
+.cal-pill-status-cancelled {
+  background: rgba(148, 163, 184, 0.9);
+  color: #e5e7eb;
+  text-decoration: line-through;
+}
+
+/* Day bookings modal */
+
+.cal-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+}
+
+.cal-modal.is-hidden {
+  display: none;
+}
+
+.cal-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(4px);
+}
+
+.cal-modal-panel {
+  position: relative;
+  margin: 48px auto;
+  max-width: 420px;
+  width: 100%;
+  border-radius: 22px;
+  background: linear-gradient(150deg, #06101f, #07182c);
+  border: 1px solid rgba(120, 165, 255, 0.28);
+  padding: 20px 20px 18px;
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.7);
+}
+
+.cal-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.cal-modal-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.cal-modal-subtitle {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #8ea4c7;
+}
+
+.cal-modal-close {
+  border: none;
+  outline: none;
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 999px;
+  padding: 6px 8px;
+  cursor: pointer;
+  color: #e5edf9;
+  font-size: 13px;
+}
+
+.cal-day-booking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 430px;
+  overflow-y: auto;
+}
+
+/* Day booking card inside modal */
+
+.cal-day-card {
+  border-radius: 16px;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, rgba(9, 20, 45, 0.96), rgba(4, 11, 30, 0.98));
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cal-day-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cal-day-card-time {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.cal-day-card-service {
+  font-size: 13px;
+  color: #e3f2ff;
+}
+
+.cal-day-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.cal-status-pill {
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.cal-status-scheduled {
+  background: rgba(37, 99, 235, 0.32);
+  color: #bfdbfe;
+}
+
+.cal-status-completed {
+  background: rgba(22, 163, 74, 0.3);
+  color: #bbf7d0;
+}
+
+.cal-status-cancelled {
+  background: rgba(148, 163, 184, 0.25);
+  color: #e5e7eb;
+}
+
+.cal-day-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.cal-btn-ghost,
+.cal-btn-primary {
+  border-radius: 999px;
+  border: none;
+  padding: 6px 12px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.08s ease;
+}
+
+.cal-btn-ghost {
+  background: rgba(15, 23, 42, 0.9);
+  color: #cbd5f5;
+}
+
+.cal-btn-ghost:hover {
+  background: rgba(31, 41, 55, 1);
+  transform: translateY(-1px);
+}
+
+.cal-btn-primary {
+  background: #1677ff;
+  color: white;
+}
+
+.cal-btn-primary:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* Utilities */
+
+.is-hidden {
+  display: none !important;
+}
+/* ===============================
+   CALENDAR UX — CLICK AFFORDANCE
+================================ */
+
+.calendar-cell {
+  cursor: pointer;
+  transition: 
+    background 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.12s ease;
+  position: relative;
+}
+
+.calendar-cell:hover {
+  background: rgba(79, 140, 255, 0.07);
+  box-shadow: inset 0 0 0 1px rgba(79, 140, 255, 0.4);
+}
+
+.calendar-cell:active {
+  transform: scale(0.985);
+}
+.calendar-cell::after {
+  content: "+ Add booking";
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: #7aa2ff;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+
+.calendar-cell:hover::after {
+  opacity: 0.9;
+}
+.calendar-cell::after {
+  content: "+ Add booking";
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: #7aa2ff;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+
+.calendar-cell:hover::after {
+  opacity: 0.9;
+}
+.calendar-cell.today {
+  box-shadow: inset 0 0 0 2px #4f8cff;
+  background: rgba(79, 140, 255, 0.08);
+}
+
+.calendar-cell.today .cal-day {
+  font-weight: 700;
+  color: #4f8cff;
+}
+.cal-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin: 2px;
+}
+
+.cal-dot.more {
+  font-size: 10px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.15);
+}
+.calendar-switch .btn-xs {
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.calendar-switch .btn-xs.active {
+  background: #4f8cff;
+  color: #fff;
+}
+.calendar-grid {
+  pointer-events: auto;
+  position: relative;
+  z-index: 1;
+}
+.calendar-cell {
+  min-height: 92px; /* ✅ IMPORTANT */
+}
+.calendar-grid {
+  position: relative;
+  z-index: 1;
+}
+
+.calendar-cell {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+/* =========================
+   CALENDAR UX POLISH
+========================= */
+
+/* Clickable affordance */
+.calendar-cell {
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.08s ease;
+}
+
+/* Hover feedback */
+.calendar-cell:hover {
+  background: rgba(79, 140, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+/* Today highlight (stronger) */
+.calendar-cell.today {
+  border: 2px solid #4f8cff;
+  background: rgba(79, 140, 255, 0.12);
+}
+
+/* Weekend soft tone */
+.calendar-cell.weekend {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Empty cells not clickable */
+.calendar-cell.empty {
+  cursor: default;
+  background: transparent;
+}
+
+/* Dots polish */
+.cal-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* +more indicator */
+.cal-dot.more {
+  font-size: 11px;
+  opacity: 0.7;
+}
+.cal-add-hint {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  font-size: 14px;
+  opacity: 0;
+  color: #4f8cff;
+  transition: opacity 0.15s ease;
+}
+
+/* Show hint on hover */
+.calendar-cell:hover .cal-add-hint {
+  opacity: 0.9;
+}
+.week-cell {
+  transition: background 0.12s ease;
+}
+
+.week-cell:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.week-booking {
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 4px 6px;
+}
+.billing-locked #view-calendar {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.billing-locked #view-calendar::after {
+  content: "Upgrade to unlock calendar";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  font-weight: 600;
+  pointer-events: none;
+}
+/* Calendar Day Modal Text Readability */
+.calendar-day-modal,
+#calendar-day-modal {
+  background: linear-gradient(
+    180deg,
+    rgba(15, 35, 55, 0.98),
+    rgba(10, 25, 40, 0.98)
+  );
+  color: #e6edf3;
+}
+
+/* Header */
+#calendar-day-title {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+#calendar-day-sub {
+  color: #9fb6cc;
+}
+
+/* Booking Card */
+.calendar-booking-card {
+  background: #0f1e2c;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Time */
+.calendar-booking-time {
+  color: #69a7ff;
+  font-weight: 600;
+}
+
+/* Client Name */
+.calendar-booking-client {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* Service */
+.calendar-booking-service {
+  color: #9fb6cc;
+}
+
+/* Edit Button */
+.calendar-booking-actions button {
+  color: #eaf3ff;
+  background: rgba(105, 167, 255, 0.15);
+}
+.calendar-cell {
+  color: #dbe7f3;
+}
+
+.calendar-cell .cal-day {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Weekend numbers */
+.calendar-cell.weekend .cal-day {
+  color: #ffaaaa;
+}
+.calendar-booking-card {
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+}
+.calendar-cell:hover {
+  outline: 2px dashed rgba(105,167,255,0.35);
+  cursor: pointer;
+}
+
+.week-booking {
+  cursor: grab;
+}
+
+.week-booking:active {
+  cursor: grabbing;
+}
+#cal-week-view {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 220px);
+}
+.week-header {
+  display: grid;
+  grid-template-columns: 70px repeat(7, 1fr);
+  color: #9fb6cc;
+  font-size: 13px;
+  padding: 10px 12px;
+}
+#week-body {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.week-row {
+  display: grid;
+  grid-template-columns: 70px repeat(7, 1fr);
+  min-height: 56px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.week-time {
+  color: #9fb6cc;
+  font-size: 12px;
+  padding: 6px 8px;
+}
+.week-cell {
+  position: relative;
+  border-left: 1px solid rgba(255,255,255,0.04);
+  cursor: pointer;
+}
+
+.week-cell:hover {
+  background: rgba(105,167,255,0.06);
+}
+.week-booking {
+  font-size: 12px;
+  border-radius: 8px;
+  padding: 6px;
+  margin: 2px;
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.35);
+}
+/* WEEK HEADER */
+.week-header,
+.week-day,
+.week-time {
+  color: #e5f0ff;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+
+/* WEEK GRID CELLS */
+.week-cell {
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* WEEK BOOKINGS */
+.week-booking {
+  color: #ffffff;
+  font-size: 13px;
+}
+/* ============================
+   CALENDAR DRAG (WEEKLY)
+============================ */
+.week-booking {
+  position: relative;
+  cursor: grab;
+  user-select: none;
+}
+
+.week-booking.dragging {
+  opacity: 0.8;
+  cursor: grabbing;
+  z-index: 20;
+}
+
+.week-cell {
+  position: relative;
+}
+/* ===== A2 — RESIZE HANDLE ===== */
+.resize-handle {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  cursor: ns-resize;
+  background: transparent;
+}
+
+.week-booking.resizing {
+  opacity: 0.9;
+}
+.week-booking {
+  cursor: grab;
+  transition: box-shadow 0.15s ease;
+}
+
+.week-booking.dragging {
+  cursor: grabbing;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  z-index: 50;
+}
+
+.resize-handle {
+  cursor: ns-resize;
+}
+.week-cell:hover {
+  background: rgba(79, 140, 255, 0.03);
+}
+.week-booking:hover {
+  outline: 2px solid rgba(255,255,255,0.15);
+}
+
+.week-booking.resizing {
+  outline: 2px dashed rgba(255,255,255,0.4);
+}
+.week-cell {
+  position: relative;
+}
+
+.week-booking {
+  position: absolute;
+  box-sizing: border-box;
+}
+.drag-ghost {
+  filter: saturate(0.7);
+  border: 1px dashed rgba(255,255,255,.5);
+}
+
+.week-booking.dragging {
+  opacity: 0.15;
+}
+button,
+.btn-primary,
+.btn-secondary {
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.15);
+}
+
+.section-card,
+.calendar-booking-card {
+  animation: fadeInUp .25s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.cal-cell:not(.has-bookings):hover {
+  background: rgba(79,140,255,.06);
+  cursor: pointer;
+}
+.cal-add-hint {
+  opacity: .25;
+  transition: opacity .15s;
+}
+.cal-cell:hover .cal-add-hint {
+  opacity: 1;
+}
+.skeleton {
+  background: linear-gradient(90deg,
+    rgba(255,255,255,.05),
+    rgba(255,255,255,.12),
+    rgba(255,255,255,.05)
+  );
+  animation: shimmer 1.3s infinite;
+}
+
+@keyframes shimmer {
+  from { background-position: -200px 0 }
+  to { background-position: 200px 0 }
+}
+.modal {
+  animation: modalIn .18s ease-out;
+}
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+/* ============================================================
+   SCHEDMATE CRM PRO MAX — UI POLISH PATCH ✅
+   Safe UI-only enhancements
+   - Empty states
+   - Micro-animations
+   - Skeleton loaders
+   - Modal transitions
+   - Calendar hover polish
+   - Buttons & cards
+============================================================ */
+
+/* =========================
+   GLOBAL MICRO-ANIMATIONS
+========================= */
+button,
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-muted {
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease,
+    background-color .15s ease,
+    opacity .15s ease;
+}
+
+button:hover:not(:disabled),
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-danger:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(0,0,0,.15);
+}
+
+/* =========================
+   SECTION CARDS ANIMATION
+========================= */
+.section-card,
+.calendar-booking-card,
+.booking-history-card,
+.crm-client-row {
+  animation: fadeInUp .22s ease both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   EMPTY STATES
+========================= */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  text-align: center;
+  opacity: .92;
+}
+
+.empty-state h1,
+.empty-state h2 {
+  margin-top: 12px;
+}
+
+.empty-state p {
+  max-width: 420px;
+  color: var(--muted-text, #9ca3af);
+}
+
+.empty-card {
+  margin-top: 16px;
+  padding: 28px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.03);
+  border: 1px dashed rgba(255,255,255,.12);
+}
+
+.empty-icon {
+  font-size: 42px;
+  opacity: .85;
+}
+
+/* =========================
+   SKELETON LOADERS
+========================= */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255,255,255,.06);
+  border-radius: 6px;
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.15),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton.row {
+  height: 18px;
+  margin-bottom: 10px;
+}
+
+/* =========================
+   MODAL ENTER TRANSITIONS
+========================= */
+.modal,
+#edit-booking-modal,
+#add-booking-modal,
+#calendar-day-modal,
+#client-profile-modal,
+#upgrade-modal {
+  animation: modalIn .18s ease-out;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(.985);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =========================
+   CALENDAR — EMPTY DAY UX
+========================= */
+.calendar-cell {
+  transition: background-color .15s ease;
+}
+
+.calendar-cell:hover {
+  background: rgba(79, 140, 255, .07);
+  cursor: pointer;
+}
+
+.calendar-cell.empty:hover {
+  background: transparent;
+}
+
+.cal-add-hint {
+  opacity: .25;
+  font-size: 18px;
+  transition: opacity .15s ease, transform .15s ease;
+}
+
+.calendar-cell:hover .cal-add-hint {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* =========================
+   CALENDAR — WEEK BOOKINGS
+========================= */
+.week-booking {
+  transition:
+    transform .12s ease,
+    box-shadow .12s ease;
+}
+
+.week-booking:hover {
+  z-index: 5;
+  box-shadow: 0 8px 20px rgba(0,0,0,.25);
+}
+
+/* =========================
+   TABLE ROW HOVER
+========================= */
+.table-shell tbody tr {
+  transition: background-color .15s ease;
+}
+
+.table-shell tbody tr:hover {
+  background-color: rgba(255,255,255,.04);
+}
+
+/* =========================
+   HIGHLIGHT BOOKING
+========================= */
+.highlight-booking {
+  animation: pulseHighlight 1.2s ease;
+}
+
+@keyframes pulseHighlight {
+  0% { background-color: rgba(79,140,255,.0); }
+  30% { background-color: rgba(79,140,255,.18); }
+  100% { background-color: rgba(79,140,255,.0); }
+}
+
+/* =========================
+   LOCKED / DISABLED POLISH
+========================= */
+.locked,
+.locked-disabled {
+  opacity: .45;
+  filter: grayscale(.3);
+  cursor: not-allowed;
+}
+
+/* =========================
+   TOOLTIP POLISH
+========================= */
+.tooltip {
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .15s ease, transform .15s ease;
+}
+
+.nav-item:hover .tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================
+   LIGHT MODE SAFETY
+========================= */
+body[data-theme="light"] .empty-card {
+  background: rgba(0,0,0,.03);
+  border-color: rgba(0,0,0,.12);
+}
+
+body[data-theme="light"] .skeleton {
+  background: rgba(0,0,0,.05);
+}
+/* ============================================================
+   SCHEDMATE CRM PRO MAX — LIGHT MODE POLISH ✅
+   Purpose:
+   - Reduce eye strain
+   - Improve contrast & hierarchy
+   - Make light mode feel premium (not flat)
+============================================================ */
+
+body[data-theme="light"] {
+  background: #f6f8fb;
+  color: #0f172a;
+}
+
+/* =========================
+   CARDS & SECTIONS
+========================= */
+body[data-theme="light"] .section-card,
+body[data-theme="light"] .empty-card,
+body[data-theme="light"] .calendar-booking-card,
+body[data-theme="light"] .booking-history-card {
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, .08);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, .06);
+}
+
+/* =========================
+   HEADINGS & TEXT
+========================= */
+body[data-theme="light"] h1,
+body[data-theme="light"] h2,
+body[data-theme="light"] h3 {
+  color: #0f172a;
+}
+
+body[data-theme="light"] .page-desc,
+body[data-theme="light"] .muted,
+body[data-theme="light"] .text-muted {
+  color: #64748b;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+body[data-theme="light"] .btn-primary {
+  background: linear-gradient(
+    135deg,
+    #4f8cff,
+    #3b6ff5
+  );
+  color: #fff;
+}
+
+body[data-theme="light"] .btn-primary:hover {
+  box-shadow: 0 8px 22px rgba(79, 140, 255, .35);
+}
+
+body[data-theme="light"] .btn-secondary {
+  background: #f1f5f9;
+  color: #0f172a;
+  border: 1px solid rgba(15, 23, 42, .12);
+}
+
+body[data-theme="light"] .btn-danger {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* =========================
+   TABLES
+========================= */
+body[data-theme="light"] .table-shell {
+  background: #ffffff;
+}
+
+body[data-theme="light"] .table-shell thead th {
+  background: #f8fafc;
+  color: #334155;
+}
+
+body[data-theme="light"] .table-shell tbody tr {
+  border-bottom: 1px solid rgba(15, 23, 42, .06);
+}
+
+body[data-theme="light"] .table-shell tbody tr:hover {
+  background: rgba(79, 140, 255, .04);
+}
+
+/* =========================
+   CALENDAR — MONTH VIEW
+========================= */
+body[data-theme="light"] .calendar-cell {
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, .08);
+}
+
+body[data-theme="light"] .calendar-cell.today {
+  outline: 2px solid rgba(79, 140, 255, .6);
+}
+
+body[data-theme="light"] .calendar-cell.weekend {
+  background: #f9fafb;
+}
+
+/* =========================
+   CALENDAR — WEEK VIEW
+========================= */
+body[data-theme="light"] .week-row {
+  border-bottom: 1px solid rgba(15, 23, 42, .06);
+}
+
+body[data-theme="light"] .week-time {
+  color: #475569;
+  background: #f8fafc;
+}
+
+body[data-theme="light"] .week-cell {
+  border-left: 1px solid rgba(15, 23, 42, .06);
+}
+
+/* =========================
+   MODALS
+========================= */
+body[data-theme="light"] .modal,
+body[data-theme="light"] #client-profile-modal,
+body[data-theme="light"] #edit-booking-modal,
+body[data-theme="light"] #add-booking-modal {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+body[data-theme="light"] .modal-overlay {
+  background: rgba(15, 23, 42, .35);
+}
+
+/* =========================
+   INPUTS
+========================= */
+body[data-theme="light"] input,
+body[data-theme="light"] textarea,
+body[data-theme="light"] select {
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, .15);
+  color: #0f172a;
+}
+
+body[data-theme="light"] input:focus,
+body[data-theme="light"] textarea:focus,
+body[data-theme="light"] select:focus {
+  outline: none;
+  border-color: #4f8cff;
+  box-shadow: 0 0 0 2px rgba(79, 140, 255, .2);
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+body[data-theme="light"] #sidebar {
+  background: #ffffff;
+  border-right: 1px solid rgba(15, 23, 42, .08);
+}
+
+body[data-theme="light"] .nav-item {
+  color: #334155;
+}
+
+body[data-theme="light"] .nav-item.active {
+  background: rgba(79, 140, 255, .12);
+  color: #1d4ed8;
+}
+
+body[data-theme="light"] .nav-item:hover {
+  background: rgba(79, 140, 255, .06);
+}
+
+/* =========================
+   TOOLTIP (LIGHT MODE)
+========================= */
+body[data-theme="light"] .tooltip {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+/* =========================
+   LOCKED UI (LIGHT MODE)
+========================= */
+body[data-theme="light"] .locked,
+body[data-theme="light"] .locked-disabled {
+  opacity: .5;
+}
+
+/* =========================
+   EMPTY STATES (LIGHT)
+========================= */
+body[data-theme="light"] .empty-state {
+  color: #475569;
+}
+
+body[data-theme="light"] .empty-icon {
+  opacity: .75;
+}
+.empty-card {
+  min-width: 320px;
+  padding: 36px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 18px;
+}
+.page-header {
+  margin-bottom: 32px;
+}
+.page-header h1 {
+  font-size: 32px;
+}
+.kpi-card {
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+.kpi-card:hover {
+  transform: translateY(-2px);
+}
+.nav-item.active {
+  box-shadow: inset 3px 0 0 #4f8cff;
+}
+.week-booking {
+  font-weight: 600;
+}
+.week-booking small {
+  opacity: .85;
+}
+.cal-add-hint {
+  opacity: .35;
+}
+.calendar-cell:hover .cal-add-hint {
+  opacity: 1;
+}
+textarea {
+  line-height: 1.5;
+  padding: 14px;
+}
+.table-actions button {
+  font-size: 13px;
+  padding: 6px 10px;
+}
+.calendar-header {
+  padding-bottom: 12px;
+}
+.kpi-card {
+  box-shadow: 0 12px 30px rgba(0,0,0,.3);
+}
+/* ===== PERF OPTIMIZATIONS ===== */
+
+/* Reduce expensive shadows on high-frequency hover */
+.calendar-cell,
+.week-booking {
+  box-shadow: none;
+}
+
+/* Explicit transitions only */
+.calendar-cell,
+.week-booking,
+.btn-primary,
+.btn-secondary {
+  transition:
+    transform .12s ease,
+    background .15s ease,
+    box-shadow .15s ease;
+}
+
+/* Skip hover hints on empty cells */
+.calendar-cell.empty:hover::after,
+.calendar-cell.empty:hover .cal-add-hint {
+  display: none;
+}
+
+/* Reduce animation for low-motion users */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

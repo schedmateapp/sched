@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Log in — SchedMate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="/css/app.css" />
+
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/supabaseClient.js"></script>
+</head>
+
+<body>
+  <div class="page-shell" style="max-width:480px;">
+    <div class="card">
+      <h1 style="margin:0 0 8px;font-size:1.4rem;">Log in to your workspace</h1>
+      <p class="text-muted" style="margin:0 0 16px;font-size:.9rem;">
+        Use the same email and password you used when you signed up.
+      </p>
+
+      <form id="login-form">
+        <div class="mt-2">
+          <label for="email">Email</label>
+          <input id="email" type="email" required />
+        </div>
+
+        <div class="mt-2">
+          <label for="password">Password</label>
+          <input id="password" type="password" required />
+        </div>
+
+        <div class="form-footer">
+          <button class="btn" type="submit">Log in</button>
+        </div>
+      </form>
+
+      <p id="auth-message" class="text-muted mt-2" style="font-size:.8rem;"></p>
+
+      <p class="text-muted" style="font-size:.8rem;">
+        New here? <a href="signup.html">Create an account</a>.
+      </p>
+
+      <p class="text-muted" style="font-size:.8rem;">
+        <a href="../index.html">&larr; Back to site</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="/js/auth.js"></script>
+</body>
+</html>

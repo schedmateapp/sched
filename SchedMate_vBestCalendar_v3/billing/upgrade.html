@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SchedMate — Upgrade your workspace</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #162b55 0, #050816 55%, #02040a 100%);
+      color: #f9fbff;
+      min-height: 100vh;
+      padding: 28px 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .wrap {
+      width: 100%;
+      max-width: 1040px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(31, 107, 255, 0.16);
+      color: #b5ceff;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #45ffb8;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+    .subtitle {
+      margin: 0;
+      font-size: 15px;
+      color: #c1ceff;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 18px;
+      margin-top: 26px;
+    }
+    @media (max-width: 800px) {
+      .grid {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+    .plan {
+      border-radius: 18px;
+      padding: 18px 16px 20px;
+      background: radial-gradient(circle at top, #23376e 0, #050a18 60%);
+      border: 1px solid rgba(133, 162, 255, 0.65);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .plan.highlight {
+      border-color: #1f6bff;
+      box-shadow: 0 0 26px rgba(31, 107, 255, 0.55);
+    }
+    .badge-top {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      font-size: 10px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(15, 92, 255, 0.16);
+      color: #b9d2ff;
+      border: 1px solid rgba(113, 167, 255, 0.8);
+    }
+    .plan-name {
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .plan-for {
+      font-size: 13px;
+      color: #9fb2ff;
+    }
+    .plan-price {
+      font-size: 22px;
+      font-weight: 600;
+      margin-top: 3px;
+    }
+    .plan-price span {
+      font-size: 12px;
+      font-weight: 400;
+      color: #a8bcff;
+    }
+    .list {
+      list-style: none;
+      padding: 0;
+      margin: 6px 0 0;
+      font-size: 13px;
+      color: #c5d1ff;
+    }
+    .list li {
+      margin-bottom: 4px;
+    }
+    .list li span {
+      margin-right: 6px;
+      color: #6fffba;
+    }
+    .cta {
+      margin-top: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 0;
+      cursor: pointer;
+      font-size: 13px;
+      color: #fff;
+      background: linear-gradient(135deg, #1f6bff, #3d8cff);
+      box-shadow: 0 10px 24px rgba(25, 96, 232, 0.55);
+      text-decoration: none;
+      transition: 0.18s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .meta {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 12px;
+      color: #9cadff;
+    }
+    .link {
+      color: #c3d4ff;
+      text-decoration: none;
+    }
+    .link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="header">
+      <div class="pill">
+        <span class="pill-dot"></span>
+        Upgrade when you’re ready — cancel anytime
+      </div>
+      <h1>Upgrade SchedMate. Keep your days fully booked.</h1>
+      <p class="subtitle">
+        Choose the plan that matches your service business. All plans include the same simple scheduling,
+        CRM, and job tracking experience you see in your dashboard.
+      </p>
+    </header>
+
+    <section class="grid">
+      <article class="plan">
+        <div class="plan-name">Starter</div>
+        <div class="plan-for">For solo cleaners and field techs</div>
+        <div class="plan-price">$9.99 <span>/ month</span></div>
+        <ul class="list">
+          <li><span>•</span>Unlimited clients & bookings (fair-use)</li>
+          <li><span>•</span>Today view + schedule</li>
+          <li><span>•</span>Simple CRM with notes and tags</li>
+        </ul>
+        <div class="cta">
+          <a
+            href="https://www.paypal.com/ncp/payment/PHPCBQ674BZFC"
+            class="btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Start Starter with PayPal</a>
+        </div>
+      </article>
+
+      <article class="plan highlight">
+        <div class="badge-top">Most popular</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-for">For busy solo pros & small crews</div>
+        <div class="plan-price">$19.99 <span>/ month</span></div>
+        <ul class="list">
+          <li><span>•</span>Everything in Starter</li>
+          <li><span>•</span>Better capacity for daily jobs</li>
+          <li><span>•</span>Ideal for 1–3 active workers</li>
+        </ul>
+        <div class="cta">
+          <a
+            href="https://www.paypal.com/ncp/payment/QT2MN5JX324GU"
+            class="btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Upgrade to Pro with PayPal</a>
+        </div>
+      </article>
+
+      <article class="plan">
+        <div class="plan-name">Premium Team</div>
+        <div class="plan-for">For growing teams with high volume</div>
+        <div class="plan-price">$39.99 <span>/ month</span></div>
+        <ul class="list">
+          <li><span>•</span>Everything in Pro</li>
+          <li><span>•</span>Supports more staff & territories</li>
+          <li><span>•</span>Best for businesses with many jobs/day</li>
+        </ul>
+        <div class="cta">
+          <a
+            href="https://www.paypal.com/ncp/payment/Z7MD24BMYDJ9W"
+            class="btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Get Premium Team with PayPal</a>
+        </div>
+      </article>
+    </section>
+
+    <p class="meta">
+      Already subscribed? <a href="/dashboard/" class="link">Go back to your dashboard</a> or
+      <a href="/billing.html" class="link">manage billing settings</a>.
+    </p>
+  </div>
+</body>
+</html>

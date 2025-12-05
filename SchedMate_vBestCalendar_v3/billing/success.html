@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment Successful – SchedMate</title>
+
+  <!-- ✅ GLOBAL CSS -->
+  <link rel="stylesheet" href="/css/app.css" />
+
+  <style>
+    body {
+      background: linear-gradient(145deg, #0d1117, #0a0e13);
+      color: #fff;
+      font-family: Inter, system-ui, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .success-box {
+      background: rgba(255,255,255,0.06);
+      padding: 40px;
+      border-radius: 16px;
+      max-width: 480px;
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 0 40px rgba(0,0,0,0.4);
+    }
+
+    h1 { font-size: 32px; margin-bottom: 10px; }
+    .sub { color: #b7b7b7; margin-bottom: 24px; }
+
+    .subscription-id {
+      background: rgba(255,255,255,0.08);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-top: 18px;
+      word-break: break-all;
+      color: #7dcfff;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="success-box">
+    <h1>🎉 Payment Successful</h1>
+    <p class="sub">
+      Your subscription is now active.<br>
+      Redirecting you to manage your plan…
+    </p>
+
+    <div id="subBox" class="subscription-id"></div>
+  </div>
+
+  <!-- ✅ Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/supabaseClient.js"></script>
+
+  <script>
+  (async () => {
+    const supabase = window.supabaseClient;
+
+    // ✅ Require login
+    const { data:{ session } } = await supabase.auth.getSession();
+    if (!session) {
+      window.location.href = "/auth/login.html";
+      return;
+    }
+
+    const user = session.user;
+
+    // ✅ Get PayPal subscription ID (if provided)
+    const params = new URLSearchParams(window.location.search);
+    const subscriptionId = params.get("subscription_id");
+
+    // ✅ Activate billing row
+    const { error: billingError } = await supabase
+      .from("billing")
+      .update({
+        status: "active",
+        subscription_id: subscriptionId,
+        trial_ends_at: null,
+        updated_at: new Date().toISOString()
+      })
+      .eq("user_id", user.id);
+
+    if (billingError) {
+      console.error("Billing activation failed:", billingError);
+      alert("Payment received but billing update failed.");
+      return;
+    }
+
+    // ✅ Unlock features via plan
+    const { error: planError } = await supabase
+      .from("profiles")
+      .update({ plan: "pro" })
+      .eq("id", user.id);
+
+    if (planError) {
+      console.error("Plan upgrade failed:", planError);
+      alert("Billing active but plan update failed.");
+      return;
+    }
+
+    // ✅ Optional display
+    if (subscriptionId) {
+      const box = document.getElementById("subBox");
+      box.textContent = "Subscription ID: " + subscriptionId;
+      box.style.display = "block";
+    }
+
+    // ✅ SINGLE redirect (authoritative)
+    setTimeout(() => {
+      window.location.href = "/billing/manage.html";
+    }, 1200);
+  })();
+  </script>
+</body>
+</html>
